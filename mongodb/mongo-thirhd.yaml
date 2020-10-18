@@ -1,0 +1,42 @@
+apiVersion: apps.openshift.io/v1
+kind: StatefulSet
+metadata:
+  labels:
+    run: mongo
+  name: mongo
+  namespace: rocketchat
+spec:
+  serviceName: mongodb-service
+  replicas: 1
+  selector:
+    run: mongo
+  template:
+    metadata:
+      labels:
+        run: mongo
+    spec:
+      volumes:
+        - name: mongodata
+          persistentVolumeClaim:
+           claimName: mongo-pvc
+      containers:
+      - image: mongo
+        name: mongo
+        command:
+          - mongod
+          - --replSet
+          - rs0
+          - --bind_ip
+          - 0.0.0.0
+
+        ports:
+          - containerPort: 27017
+        volumeMounts:
+          - name: mongodata
+            mountPath: /data/db
+      #- image: mongo
+       # name: mongo-init-replica
+        #command: 
+         # - mongo
+         # - "rs.initiate({_id: 'rs0', members: [{ _id: 0, host: 'localhost:27017'}]})"
+        
