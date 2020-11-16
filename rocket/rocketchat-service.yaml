@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: rocket
+  name: rocket
+  namespace: rocketchat
+spec:
+  ports:
+  - port: 3000
+    name: rocket-listen
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: rocket

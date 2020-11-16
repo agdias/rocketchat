@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rocket
+  name: rocket
+  namespace: rocketchat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rocket
+  template:
+    metadata:
+      labels:
+        app: rocket
+    spec:
+      containers:
+      - image: rocket.chat
+        name: rocketchat
+        env:
+          - name: MONGO_URL
+            value: "mongodb://10.131.85.40:27017"
+        ports:
+          - containerPort: 3000
