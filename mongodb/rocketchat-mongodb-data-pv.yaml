@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  nfs:
+    path: /ifs/OKD_HML/okd_hml_rocketchat/data
+    server: nfs-isilon-2.intra.tjmg.gov.br
+  persistentVolumeReclaimPolicy: Retain
